@@ -9,3 +9,5 @@ format: html
 #| library(tidyverse)
 ```
 We have polling data from a YouGov survey conducted in March 2024, involving 1,559 US adult citizens. We seek to predict the proportion of votes cast for Joe Biden in the 2024 election based on this survey data. This involves creating a Preceptor Table, examining the data for validity, and determining the outcome as whether a vote was cast for Biden or not.
+
+We are analyzing polling data from YouGov, collected in March 2024, to predict the proportion of votes that will be cast for Joe Biden in the 2024 election. While we seek to utilize this data to make accurate predictions, the assumptions of validity and representativeness pose potential problems. The data may not fully reflect the actual voting behavior in November 2024 due to changes in voter opinions over time and the possibility of a non-representative sample
