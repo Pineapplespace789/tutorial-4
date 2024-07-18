@@ -1,0 +1,11 @@
+---
+title: "Models"
+author: "SriRitvik Yellamilli"
+format: html
+---
+```{r}
+#| label: setup
+#| message: FALSE
+#| library(tidyverse)
+```
+We have polling data from a YouGov survey conducted in March 2024, involving 1,559 US adult citizens. We seek to predict the proportion of votes cast for Joe Biden in the 2024 election based on this survey data. This involves creating a Preceptor Table, examining the data for validity, and determining the outcome as whether a vote was cast for Biden or not.
