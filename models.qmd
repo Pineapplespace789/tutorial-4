@@ -6,8 +6,28 @@ format: html
 ```{r}
 #| label: setup
 #| message: FALSE
-#| library(tidyverse)
+library(gtsummary)
+library(tidyverse)
+library(brms)
+library(tidybayes)
 ```
-We have polling data from a YouGov survey conducted in March 2024, involving 1,559 US adult citizens. We seek to predict the proportion of votes cast for Joe Biden in the 2024 election based on this survey data. This involves creating a Preceptor Table, examining the data for validity, and determining the outcome as whether a vote was cast for Biden or not.
+```{r}
+#| label: plot
+fit_bern |> 
+  add_epred_draws(newdata = ndata) |> 
+  select(.epred) |> ggplot(aes(x = .epred, y = after_stat(count / sum(count)))) + geom_density() + 
+  scale_x_continuous(labels = scales::percent_format()) + scale_y_continuous(labels = scales::percent_format()) + labs(title = "Posterior Distribution for p", subtitle = "There is a 95% chance for a value between 40% and 45%.", x = "Proportion, p, of Votes for Biden", y = "Probability")
+```
+In this project, we aimed to predict the proportion of votes that will be cast for Joe Biden in the 2024 election. By using an intercept-only Bernoulli model, we estimated the expected value of this proportion. Our analysis indicates that there is a 95% chance that the proportion of votes for Biden will be between 40% and 45%. This estimate is based on the data we collected and the model we built, providing a measure of uncertainty around the predicted value.
 
-We are analyzing polling data from YouGov, collected in March 2024, to predict the proportion of votes that will be cast for Joe Biden in the 2024 election. While we seek to utilize this data to make accurate predictions, the assumptions of validity and representativeness pose potential problems. The data may not fully reflect the actual voting behavior in November 2024 due to changes in voter opinions over time and the possibility of a non-representative sample
+$$ biden_i =  \mu + \epsilon_i $$
+```{r}
+#| label: model
+#| cache: true
+fit_bern <- brm(formula = biden ~ 1,
+    data = poll_data,
+    family = bernoulli(),
+    refresh = 0,
+    silent = 2,
+    seed = 9)
+```
